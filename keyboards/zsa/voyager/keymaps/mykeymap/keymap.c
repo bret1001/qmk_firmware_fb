@@ -376,3 +376,41 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
   return true;
 }
+
+
+
+// ------------------------------------------------------------
+//  Variables globales
+// ------------------------------------------------------------
+os_variant_t detected_os = OS_UNSURE;
+bool os_layer_applied = false; // évite d'activer le layer plusieurs fois
+
+// ------------------------------------------------------------
+//  Callback de détection d'OS
+//  (ne pas changer les layers ici — juste enregistrer l'OS)
+// ------------------------------------------------------------
+bool process_detected_host_os_user(os_variant_t os) {
+    detected_os = os;
+
+    return true;
+}
+
+
+// ------------------------------------------------------------
+//  Application du layer approprié — une seule fois
+//  (matrix_scan_user est appelée en boucle mais notre flag
+//   garantit qu'on ne togglera qu'une fois)
+// ------------------------------------------------------------
+void matrix_scan_user(void) {
+    if (!os_layer_applied && detected_os != OS_UNSURE) {
+        switch (detected_os) {
+            case OS_WINDOWS:
+                layer_on(1);
+                break;
+            default:
+                break;
+        }
+
+        os_layer_applied = true; // empêche la répétition
+    }
+}
