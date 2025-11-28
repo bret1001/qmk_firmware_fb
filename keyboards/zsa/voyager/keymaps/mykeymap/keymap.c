@@ -377,31 +377,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
-
-
 // ------------------------------------------------------------
-//  Variables globales
+// Actication OS Detection
+//
+// NOTE: Active Layer 1 si Windows
 // ------------------------------------------------------------
 os_variant_t detected_os = OS_UNSURE;
 bool os_layer_applied = false; // évite d'activer le layer plusieurs fois
 
-// ------------------------------------------------------------
-//  Callback de détection d'OS
-//  (ne pas changer les layers ici — juste enregistrer l'OS)
-// ------------------------------------------------------------
+
 bool process_detected_host_os_user(os_variant_t os) {
+    //  Ne pas changer les layers ici — juste enregistrer l'OS
     detected_os = os;
 
     return true;
 }
 
-
-// ------------------------------------------------------------
-//  Application du layer approprié — une seule fois
-//  (matrix_scan_user est appelée en boucle mais notre flag
-//   garantit qu'on ne togglera qu'une fois)
-// ------------------------------------------------------------
 void matrix_scan_user(void) {
+    // matrix_scan_user est appelée en boucle mais le flag
+    //   garantit qu'on ne togglera qu'une fois
     if (!os_layer_applied && detected_os != OS_UNSURE) {
         switch (detected_os) {
             case OS_WINDOWS:
@@ -412,5 +406,40 @@ void matrix_scan_user(void) {
         }
 
         os_layer_applied = true; // empêche la répétition
+    }
+}
+
+// ------------------------------------------------------------
+// Actication CAPS WORD
+//
+// NOTE:
+// - Activation via L-Shift + R-Shift.
+// - Le Call back pour ne pas ajuster le shift sur Tiret
+// ------------------------------------------------------------
+bool caps_word_press_user(uint16_t keycode) {
+    switch (keycode) {
+        // Keycodes that continue Caps Word, with shift applied.
+        case KC_A ... KC_Z:
+            add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
+            return true;
+
+        // Keycodes that continue Caps Word, without shifting.
+        case KC_1 ... KC_0:
+        case KC_BSPC:
+        case KC_DEL:
+        case KC_UNDS:
+        case KC_MINS:
+            return true;
+
+        default:
+            return false;  // Deactivate Caps Word.
+    }
+}
+
+void caps_word_set_user(bool active) {
+    if (active) {
+        // Do something when Caps Word activates.
+    } else {
+        // Do something when Caps Word deactivates.
     }
 }
