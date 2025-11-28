@@ -138,11 +138,11 @@ bool rgb_matrix_indicators_user(void) {
     }
   }
 
-  if ((capslock_active || capsword_active) && biton32(layer_state) == 0) {
-    RGB rgb = hsv_to_rgb_with_value((HSV) { 88, 255, 255 });
+  if ((capsword_active) && (biton32(layer_state) == 0 || biton32(layer_state) == 1)) {
+    RGB rgb = hsv_to_rgb_with_value((HSV) { 169, 255, 255 });
     rgb_matrix_set_color( 6, rgb.r, rgb.g, rgb.b );
   }
-  if ((capslock_active || capsword_active) && biton32(layer_state) == 1) {
+  if (capslock_active && (biton32(layer_state) == 0 || biton32(layer_state) == 1)) {
     RGB rgb = hsv_to_rgb_with_value((HSV) { 88, 255, 255 });
     rgb_matrix_set_color( 6, rgb.r, rgb.g, rgb.b );
   }
@@ -425,6 +425,11 @@ bool caps_word_press_user(uint16_t keycode) {
     switch (keycode) {
         // Keycodes that continue Caps Word, with shift applied.
         case KC_A ... KC_Z:
+        case CSA_CCED:
+        case CSA_UGRV:
+        case CSA_ECUT:
+        case CSA_EGRV:
+        case CSA_AGRV:
             add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
             return true;
 
@@ -434,6 +439,7 @@ bool caps_word_press_user(uint16_t keycode) {
         case KC_DEL:
         case KC_UNDS:
         case KC_MINS:
+        case CSA_DCRC:
             return true;
 
         default:
