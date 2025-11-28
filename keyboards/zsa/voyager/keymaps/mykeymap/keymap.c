@@ -73,6 +73,7 @@ combo_t key_combos[COMBO_COUNT] = {
 
 
 bool capslock_active = false;
+bool capsword_active = false;
 
 bool led_update_user(led_t led_state) {
   capslock_active = led_state.caps_lock;
@@ -137,11 +138,11 @@ bool rgb_matrix_indicators_user(void) {
     }
   }
 
-  if (capslock_active && biton32(layer_state) == 0) {
+  if ((capslock_active || capsword_active) && biton32(layer_state) == 0) {
     RGB rgb = hsv_to_rgb_with_value((HSV) { 88, 255, 255 });
     rgb_matrix_set_color( 6, rgb.r, rgb.g, rgb.b );
   }
-  if (capslock_active && biton32(layer_state) == 1) {
+  if ((capslock_active || capsword_active) && biton32(layer_state) == 1) {
     RGB rgb = hsv_to_rgb_with_value((HSV) { 88, 255, 255 });
     rgb_matrix_set_color( 6, rgb.r, rgb.g, rgb.b );
   }
@@ -443,7 +444,9 @@ bool caps_word_press_user(uint16_t keycode) {
 void caps_word_set_user(bool active) {
     if (active) {
         // Do something when Caps Word activates.
+        capsword_active = true;
     } else {
         // Do something when Caps Word deactivates.
+        capsword_active = false;
     }
 }
