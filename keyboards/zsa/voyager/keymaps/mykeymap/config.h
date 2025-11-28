@@ -8,7 +8,7 @@
 #define RGB_MATRIX_TIMEOUT 120000
 
 #define USB_SUSPEND_WAKEUP_DELAY 0
-#define SERIAL_NUMBER "x3po0/Jaz7qp"
+#define SERIAL_NUMBER "x3po0/ZPRyqp"
 #define LAYER_STATE_8BIT
 #define COMBO_COUNT 1
 

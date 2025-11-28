@@ -19,12 +19,12 @@ enum tap_dance_codes {
   DANCE_2,
 };
 
-#define DUAL_FUNC_0 LT(12, KC_Y)
-#define DUAL_FUNC_1 LT(6, KC_F3)
-#define DUAL_FUNC_2 LT(5, KC_D)
-#define DUAL_FUNC_3 LT(7, KC_U)
-#define DUAL_FUNC_4 LT(4, KC_O)
-#define DUAL_FUNC_5 LT(6, KC_0)
+#define DUAL_FUNC_0 LT(11, KC_F13)
+#define DUAL_FUNC_1 LT(1, KC_N)
+#define DUAL_FUNC_2 LT(15, KC_F13)
+#define DUAL_FUNC_3 LT(3, KC_I)
+#define DUAL_FUNC_4 LT(5, KC_F)
+#define DUAL_FUNC_5 LT(4, KC_F17)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_voyager(
@@ -36,7 +36,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [1] = LAYOUT_voyager(
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+    DUAL_FUNC_1,    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
     MT(MOD_LGUI, CSA_UGRV),KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, MT(MOD_RGUI, CSA_AGRV),
                                                     KC_TRANSPARENT, MT(MOD_LCTL, KC_TAB),                                MT(MOD_RCTL, KC_BSPC),KC_TRANSPARENT
@@ -138,6 +138,10 @@ bool rgb_matrix_indicators_user(void) {
   }
 
   if (capslock_active && biton32(layer_state) == 0) {
+    RGB rgb = hsv_to_rgb_with_value((HSV) { 88, 255, 255 });
+    rgb_matrix_set_color( 6, rgb.r, rgb.g, rgb.b );
+  }
+  if (capslock_active && biton32(layer_state) == 1) {
     RGB rgb = hsv_to_rgb_with_value((HSV) { 88, 255, 255 });
     rgb_matrix_set_color( 6, rgb.r, rgb.g, rgb.b );
   }
