@@ -383,7 +383,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 // ------------------------------------------------------------
-// Actication OS Detection
+// Activation OS Detection
 //
 // NOTE: Active Layer 1 si Windows
 // ------------------------------------------------------------
@@ -415,7 +415,7 @@ void matrix_scan_user(void) {
 }
 
 // ------------------------------------------------------------
-// Actication CAPS WORD
+// Activation CAPS WORD
 //
 // NOTE:
 // - Activation via L-Shift + R-Shift.
@@ -456,3 +456,17 @@ void caps_word_set_user(bool active) {
         capsword_active = false;
     }
 }
+
+
+// ------------------------------------------------------------
+// Activation Key Override
+//
+// NOTE: Active Layer 1 si Windows
+// ------------------------------------------------------------
+
+const key_override_t shift_1_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_1, KC_2);
+
+// This globally defines all key overrides to be used
+const key_override_t *key_overrides[] = {
+	// &shift_1_key_override,
+};
