@@ -504,9 +504,9 @@ void caps_word_set_user(bool active) {
 // NOTE: Active Layer 1 si Windows
 // ------------------------------------------------------------
 
-const key_override_t shift_1_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_1, KC_2);
+const key_override_t shift_bspc_to_del_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
 
 // This globally defines all key overrides to be used
 const key_override_t *key_overrides[] = {
-	// &shift_1_key_override,
+	&shift_bspc_to_del_key_override
 };
