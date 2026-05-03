@@ -458,9 +458,9 @@ const key_override_t *key_overrides[] = {
 //   plus facilement (ex.: Shift(F)+, pour ' comme dans "l'"
 // ------------------------------------------------------------
 bool is_flow_tap_key(uint16_t keycode) {
-    if ((get_mods() & (MOD_MASK_CG | MOD_BIT_LALT)) != 0) {
-        return false; // Disable Flow Tap on hotkeys.
-    }
+    // if ((get_mods() & (MOD_MASK_CG | MOD_BIT_LALT)) != 0) {
+    //     return false; // Disable Flow Tap on hotkeys.
+    // }
     switch (get_tap_keycode(keycode)) {
         case CSA_ECUT: // é
         case CSA_EGRV: // è
@@ -493,4 +493,19 @@ uint16_t get_flow_tap_term(uint16_t keycode, keyrecord_t* record,
         }
     }
     return 0;  // Disable Flow Tap.
+}
+
+
+//---------------------------
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (get_tap_keycode(keycode)) {
+        case KC_SPACE:
+        case KC_TAB:
+        case KC_BSPC:
+        case KC_ENTER:
+            return TAPPING_TERM + 100;
+        default:
+            return TAPPING_TERM;
+    }
 }
