@@ -1,6 +1,7 @@
 #include QMK_KEYBOARD_H
 #include "version.h"
 #include "i18n.h"
+#include "mousejiggler.h"
 #define MOON_LED_LEVEL LED_LEVEL
 #ifndef ZSA_SAFE_RANGE
 #define ZSA_SAFE_RANGE SAFE_RANGE
@@ -180,6 +181,12 @@ bool rgb_matrix_indicators_user(void) {
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+
+  if (record->event.pressed && mouse_jiggler_is_enabled())
+  {
+      mouse_jiggler_disable();
+  }
+
   switch (keycode) {
     case ST_MACRO_0:
     if (record->event.pressed) {
