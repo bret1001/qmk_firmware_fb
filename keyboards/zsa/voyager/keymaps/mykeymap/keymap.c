@@ -57,14 +57,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
   [5] = LAYOUT_voyager(
-    UG_TOGG,        TOGGLE_LAYER_COLOR,UG_NEXT,KC_NO,          UG_VALD,        UG_VALU,                                        KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_MS_JIGGLER_TOGGLE,
+    UG_TOGG,        TOGGLE_LAYER_COLOR,UG_NEXT,KC_NO,          UG_VALD,        UG_VALU,                                        KC_NO,          KC_NO,          DT_PRNT,        DT_DOWN,        DT_UP,          KC_MS_JIGGLER_TOGGLE,
     HSV_0_0_255,    KC_NO,          KC_AUDIO_VOL_DOWN,KC_AUDIO_VOL_UP,KC_AUDIO_MUTE,  KC_NO,                                          KC_HOME,        KC_PGDN,        KC_PAGE_UP,     KC_END,         KC_NO,          KC_NO,
     KC_NO,          KC_LEFT_CTRL,   KC_LEFT_ALT,    KC_LEFT_GUI,    KC_LEFT_SHIFT,  KC_NO,                                          KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       KC_NO,          LGUI(LSFT(KC_5)),
     KC_NO,          KC_NO,          KC_BRIGHTNESS_DOWN,KC_BRIGHTNESS_UP,KC_NO,          KC_NO,                                          KC_NO,          LCTL(LSFT(KC_TAB)),LCTL(KC_TAB),   KC_NO,          KC_NO,          KC_NO,
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
   [6] = LAYOUT_voyager(
-    UG_TOGG,        TOGGLE_LAYER_COLOR,UG_NEXT,KC_NO,          UG_VALD,        UG_VALU,                                        KC_INSERT,      KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_MS_JIGGLER_TOGGLE,
+    UG_TOGG,        TOGGLE_LAYER_COLOR,UG_NEXT,KC_NO,          UG_VALD,        UG_VALU,                                        KC_INSERT,      KC_NO,          DT_PRNT,        DT_DOWN,        DT_UP,          KC_MS_JIGGLER_TOGGLE,
     HSV_0_0_255,    KC_NO,          KC_AUDIO_VOL_DOWN,KC_AUDIO_VOL_UP,KC_AUDIO_MUTE,  KC_NO,                                          KC_HOME,        KC_PGDN,        KC_PAGE_UP,     KC_END,         KC_NO,          KC_NO,
     KC_NO,          KC_LEFT_GUI,    KC_LEFT_ALT,    KC_LEFT_CTRL,   KC_LEFT_SHIFT,  KC_NO,                                          KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       KC_NO,          KC_PSCR,
     KC_NO,          KC_NO,          KC_BRIGHTNESS_DOWN,KC_BRIGHTNESS_UP,KC_NO,          KC_NO,                                          KC_NO,          LCTL(LSFT(KC_TAB)),LCTL(KC_TAB),   KC_NO,          KC_NO,          KC_NO,
@@ -376,8 +376,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case KC_TAB:
         case KC_BSPC:
         case KC_ENTER:
-            return TAPPING_TERM + 100;
+            return g_tapping_term + 100;
         default:
-            return TAPPING_TERM;
+            return g_tapping_term;
     }
 }
