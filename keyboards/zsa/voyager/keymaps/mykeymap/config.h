@@ -65,6 +65,8 @@
 #undef ENABLE_RGB_MATRIX_RIVERFLOW
 
 // ===================== Section custom =====================
+#define TAPPING_TERM_PER_KEY
+
 #define SPECULATIVE_HOLD
 #define SPECULATIVE_HOLD_ONE_KEY
 
