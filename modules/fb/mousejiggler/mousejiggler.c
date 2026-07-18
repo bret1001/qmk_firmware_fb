@@ -7,7 +7,7 @@ ASSERT_COMMUNITY_MODULES_MIN_API_VERSION(1, 0, 0);
 
 static bool     mouse_jiggler_enabled = false;
 static uint16_t mouse_jiggler_timer   = 0;
-static uint16_t mouse_jiggler_disable_timer = 0;
+static uint32_t mouse_jiggler_disable_timer = 0;
 static int8_t   jiggle_direction      = 1;
 
 #ifndef MOUSE_JIGGLER_INTERVAL_MS
@@ -25,7 +25,7 @@ bool mouse_jiggler_is_enabled(void) {
 void mouse_jiggler_enable(void) {
     mouse_jiggler_enabled = true;
     mouse_jiggler_timer   = timer_read();
-    mouse_jiggler_disable_timer = timer_read();
+    mouse_jiggler_disable_timer = timer_read32();
 }
 
 void mouse_jiggler_disable(void) {
@@ -65,7 +65,7 @@ void housekeeping_task_mousejiggler(void) {
         STATUS_LED_1(true);
 #endif
 #ifdef MOUSE_JIGGLER_DISABLE_MIN
-        if (timer_elapsed(mouse_jiggler_disable_timer) > MOUSE_JIGGLER_DISABLE_MIN * 60000)
+        if (timer_elapsed32(mouse_jiggler_disable_timer) > MOUSE_JIGGLER_DISABLE_MIN * 60000)
         {
             mouse_jiggler_disable();
             return;
