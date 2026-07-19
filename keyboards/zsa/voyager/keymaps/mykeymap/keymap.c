@@ -45,14 +45,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [3] = LAYOUT_voyager(
     KC_ESCAPE,      KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                           KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           KC_NO,
     CW_TOGG,        KC_EXLM,        KC_AT,          CSA_LESS,       CSA_GRTR,       KC_PERC,                                        CSA_QEST,       CSA_LCBR,       CSA_RCBR,       CSA_LBRC,       CSA_RBRC,       ST_MACRO_0,
-    KC_CAPS,        KC_HASH,        KC_PLUS,        KC_ASTR,        KC_EQUAL,       KC_AMPR,                                        KC_DLR,         KC_LPRN,        KC_RPRN,        KC_COLN,        KC_SCLN,        ST_MACRO_1,
+    KC_CAPS,        KC_HASH,        KC_PLUS,        KC_ASTR,        MT(MOD_LSFT, KC_EQUAL),KC_AMPR,                                        KC_DLR,         KC_LPRN,        KC_RPRN,        KC_COLN,        KC_SCLN,        ST_MACRO_1,
     QK_LLCK,        KC_UNDS,        KC_MINUS,       CSA_SLASH,      CSA_BSLS,       CSA_PIPE,                                       CSA_APOS,       CSA_DQOT,       KC_COMMA,       KC_DOT,         CSA_DTLD,       QK_LLCK,
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
   [4] = LAYOUT_voyager(
     KC_ESCAPE,      KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                           KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           KC_NO,
     CW_TOGG,        KC_EXLM,        KC_AT,          CSA_LESS,       CSA_GRTR,       KC_PERC,                                        CSA_QEST,       CSA_LCBR,       CSA_RCBR,       CSA_LBRC,       CSA_RBRC,       ST_MACRO_2,
-    KC_CAPS,        KC_HASH,        KC_PLUS,        KC_ASTR,        KC_EQUAL,       KC_AMPR,                                        KC_DLR,         KC_LPRN,        KC_RPRN,        KC_COLN,        KC_SCLN,        ST_MACRO_3,
+    KC_CAPS,        KC_HASH,        KC_PLUS,        KC_ASTR,        MT(MOD_LSFT, KC_EQUAL),KC_AMPR,                                        KC_DLR,         KC_LPRN,        KC_RPRN,        KC_COLN,        KC_SCLN,        ST_MACRO_3,
     QK_LLCK,        KC_UNDS,        KC_MINUS,       CSA_SLASH,      CSA_BSLS,       CSA_PIPE,                                       CSA_APOS,       CSA_DQOT,       KC_COMMA,       KC_DOT,         ST_MACRO_4,     QK_LLCK,
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
@@ -60,14 +60,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     UG_TOGG,        TOGGLE_LAYER_COLOR,UG_NEXT,KC_NO,          UG_VALD,        UG_VALU,                                        KC_NO,          KC_NO,          DT_PRNT,        DT_DOWN,        DT_UP,          KC_MS_JIGGLER_TOGGLE,
     HSV_0_0_255,    KC_NO,          KC_AUDIO_VOL_DOWN,KC_AUDIO_VOL_UP,KC_AUDIO_MUTE,  KC_NO,                                          KC_HOME,        KC_PGDN,        KC_PAGE_UP,     KC_END,         KC_NO,          KC_NO,
     KC_NO,          KC_LEFT_CTRL,   KC_LEFT_ALT,    KC_LEFT_GUI,    KC_LEFT_SHIFT,  KC_NO,                                          KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       KC_NO,          LGUI(LSFT(KC_5)),
-    KC_NO,          KC_NO,          KC_BRIGHTNESS_DOWN,KC_BRIGHTNESS_UP,KC_NO,          KC_NO,                                          KC_NO,          LCTL(LSFT(KC_TAB)),LCTL(KC_TAB),   KC_NO,          KC_NO,          KC_NO,
+    KC_NO,          KC_NO,          KC_BRIGHTNESS_DOWN,KC_BRIGHTNESS_UP,KC_NO,          KC_NO,                                          KC_NO,          LCTL(LSFT(KC_TAB)),LCTL(KC_TAB),   KC_NO,          KC_NO,          DB_TOGG,
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
   [6] = LAYOUT_voyager(
     UG_TOGG,        TOGGLE_LAYER_COLOR,UG_NEXT,KC_NO,          UG_VALD,        UG_VALU,                                        KC_INSERT,      KC_NO,          DT_PRNT,        DT_DOWN,        DT_UP,          KC_MS_JIGGLER_TOGGLE,
     HSV_0_0_255,    KC_NO,          KC_AUDIO_VOL_DOWN,KC_AUDIO_VOL_UP,KC_AUDIO_MUTE,  KC_NO,                                          KC_HOME,        KC_PGDN,        KC_PAGE_UP,     KC_END,         KC_NO,          KC_NO,
     KC_NO,          KC_LEFT_GUI,    KC_LEFT_ALT,    KC_LEFT_CTRL,   KC_LEFT_SHIFT,  KC_NO,                                          KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       KC_NO,          KC_PSCR,
-    KC_NO,          KC_NO,          KC_BRIGHTNESS_DOWN,KC_BRIGHTNESS_UP,KC_NO,          KC_NO,                                          KC_NO,          LCTL(LSFT(KC_TAB)),LCTL(KC_TAB),   KC_NO,          KC_NO,          KC_NO,
+    KC_NO,          KC_NO,          KC_BRIGHTNESS_DOWN,KC_BRIGHTNESS_UP,KC_NO,          KC_NO,                                          KC_NO,          LCTL(LSFT(KC_TAB)),LCTL(KC_TAB),   KC_NO,          KC_NO,          DB_TOGG,
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
 };
@@ -195,12 +195,40 @@ static void dlog_record(uint16_t keycode, keyrecord_t* record) {
 }
 
 
+const uint16_t shift_whitelist[] = {KC_COMM, KC_DOT, KC_SCLN};
+
+bool is_shift_whitelisted(uint16_t keycode) {
+    for (uint8_t i = 0; i < ARRAY_SIZE(shift_whitelist); i++) {
+        if (shift_whitelist[i] == keycode) return true;
+    }
+    return false;
+}
+
+uint8_t real_mods = 0;
+uint8_t real_weak_mods = 0;
+bool disable_shift = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
   if (record->event.pressed && mouse_jiggler_is_enabled())
   {
       mouse_jiggler_disable();
+  }
+
+  if ((IS_LAYER_ON(3) || IS_LAYER_ON(4)) && keycode != MT(MOD_LSFT, KC_EQUAL)) {
+      real_mods      = get_mods();
+      real_weak_mods = get_weak_mods();
+      disable_shift  = false;
+
+      if (((real_mods | real_weak_mods) & MOD_MASK_SHIFT) && !is_shift_whitelisted(keycode)) {
+          if (record->event.pressed) {
+              del_mods(MOD_MASK_SHIFT);
+              del_weak_mods(MOD_MASK_SHIFT);
+              send_keyboard_report();
+
+              disable_shift = true;
+          }
+      }
   }
 
   switch (keycode) {
@@ -244,6 +272,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
 
   return true;
+}
+
+void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (disable_shift) {
+        //xprintf("disable shift après\n");
+        set_mods(real_mods);
+        set_weak_mods(real_weak_mods);
+        send_keyboard_report();
+
+        disable_shift = false;
+    }
 }
 
 // ------------------------------------------------------------
