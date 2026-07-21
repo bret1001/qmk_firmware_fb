@@ -178,23 +178,6 @@ bool rgb_matrix_indicators_user(void) {
 }
 
 
-static void dlog_record(uint16_t keycode, keyrecord_t* record) {
-  if (!debug_enable) { return; }
-  uint8_t layer = read_source_layers_cache(record->event.key);
-  bool is_tap_hold = IS_QK_MOD_TAP(keycode) || IS_QK_LAYER_TAP(keycode);
-  xprintf("L%-2u ", layer);  // Log the layer.
-  if (IS_COMBOEVENT(record->event)) {  // Combos don't have a position.
-    xprintf("combo   ");
-  } else {  // Log the "(row,col)" position.
-    xprintf("(%2u,%2u) ", record->event.key.row, record->event.key.col);
-  }
-  xprintf("%-4s %-7s %s %-3u %-3u\n",  // "(tap|hold) (press|release) <keycode>".
-      is_tap_hold ? (record->tap.count ? "tap" : "hold") : "",
-      record->event.pressed ? "press" : "release",
-      get_keycode_string(keycode), get_mods(), get_weak_mods());
-}
-
-
 const uint16_t shift_whitelist[] = {KC_COMM, KC_DOT, KC_SCLN};
 
 bool is_shift_whitelisted(uint16_t keycode) {
@@ -204,9 +187,11 @@ bool is_shift_whitelisted(uint16_t keycode) {
     return false;
 }
 
-uint8_t real_mods = 0;
-uint8_t real_weak_mods = 0;
-bool disable_shift = false;
+static uint8_t real_mods = 0;
+static uint8_t real_weak_mods = 0;
+static bool disable_shift = false;
+
+void gerer_etat_layer(uint16_t keycode, keyrecord_t *record);
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
@@ -215,6 +200,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       mouse_jiggler_disable();
   }
 
+  gerer_etat_layer(keycode, record);
+
   if ((IS_LAYER_ON(3) || IS_LAYER_ON(4)) && keycode != MT(MOD_LSFT, KC_EQUAL)) {
       real_mods      = get_mods();
       real_weak_mods = get_weak_mods();
@@ -222,6 +209,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
       if (((real_mods | real_weak_mods) & MOD_MASK_SHIFT) && !is_shift_whitelisted(keycode)) {
           if (record->event.pressed) {
+
               del_mods(MOD_MASK_SHIFT);
               del_weak_mods(MOD_MASK_SHIFT);
               send_keyboard_report();
@@ -283,6 +271,74 @@ void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         disable_shift = false;
     }
+}
+
+// ------------------------------------------------------------
+// Gérer état layers
+// ------------------------------------------------------------
+static bool layer2_k1 = false;
+static bool layer2_k2 = false;
+static bool layer3_k1 = false;
+static bool layer3_k2 = false;
+static bool layer4_k1 = false;
+static bool layer4_k2 = false;
+static bool layer5_k1 = false;
+static bool layer5_k2 = false;
+static bool layer6_k1 = false;
+static bool layer6_k2 = false;
+
+void gerer_etat_layer(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LT(2, CSA_AGRV):
+            layer2_k1 = record->event.pressed;
+            break;
+        case LT(2, CSA_UGRV):
+            layer2_k2 = record->event.pressed;
+            break;
+        case LT(3, KC_ENTER):
+            layer3_k1 = record->event.pressed;
+            break;
+        case LT(3, KC_SPACE):
+            layer3_k2 = record->event.pressed;
+            break;
+        case LT(4, KC_ENTER):
+            layer4_k1 = record->event.pressed;
+            break;
+        case LT(4, KC_SPACE):
+            layer4_k2 = record->event.pressed;
+            break;
+        case LT(5, KC_BSPC):
+            layer5_k1 = record->event.pressed;
+            break;
+        case LT(5, KC_TAB):
+            layer5_k2 = record->event.pressed;
+            break;
+        case LT(6, KC_BSPC):
+            layer6_k1 = record->event.pressed;
+            break;
+        case LT(6, KC_TAB):
+            layer6_k2 = record->event.pressed;
+            break;
+    }
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    if (layer2_k1 || layer2_k2)
+        state |= (layer_state_t)1 << 2;
+
+    if (layer3_k1 || layer3_k2)
+        state |= (layer_state_t)1 << 3;
+
+    if (layer4_k1 || layer4_k2)
+        state |= (layer_state_t)1 << 4;
+
+    if (layer5_k1 || layer5_k2)
+        state |= (layer_state_t)1 << 5;
+
+    if (layer6_k1 || layer6_k2)
+        state |= (layer_state_t)1 << 6;
+
+    return state;
 }
 
 // ------------------------------------------------------------
