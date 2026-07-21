@@ -441,45 +441,6 @@ const key_override_t *key_overrides[] = {
 // - Réduire délai sur touche F et H pour permettre le SHIFT
 //   plus facilement (ex.: Shift(F)+, pour ' comme dans "l'"
 // ------------------------------------------------------------
-// bool is_flow_tap_key(uint16_t keycode) {
-//     // if ((get_mods() & (MOD_MASK_CG | MOD_BIT_LALT)) != 0) {
-//     //     return false; // Disable Flow Tap on hotkeys.
-//     // }
-//     switch (get_tap_keycode(keycode)) {
-//         case CSA_ECUT: // é
-//         case CSA_EGRV: // è
-//         case CSA_AGRV: // à
-//         case CSA_UGRV: // ù
-//         case CSA_CCED: // ç
-//         case CSA_DCRC: // ^
-//         case KC_SPC:
-//         case KC_A ... KC_Z:
-//         case KC_DOT:
-//         case KC_COMM:
-//         case KC_SCLN:
-//         //case KC_SLSH: (couvert par CSA_ECUT)
-//             return true;
-//     }
-//     return false;
-// }
-
-// uint16_t get_flow_tap_term(uint16_t keycode, keyrecord_t* record,
-//                            uint16_t prev_keycode) {
-//     if (is_flow_tap_key(keycode) && is_flow_tap_key(prev_keycode)) {
-//         switch (get_tap_keycode(keycode)) {
-//             case KC_F:
-//             case KC_J:
-//               // return FLOW_TAP_TERM - 50;  // Short timeout on these keys.
-//               return 0;
-
-//             default:
-//               return FLOW_TAP_TERM;  // Longer timeout otherwise.
-//         }
-//     }
-//     return 0;  // Disable Flow Tap.
-// }
-
-
 uint16_t get_flow_tap_term(uint16_t keycode, keyrecord_t* record,
                            uint16_t prev_keycode) {
   // Only apply Flow Tap when following a letter key, and not hotkeys.
@@ -494,7 +455,6 @@ uint16_t get_flow_tap_term(uint16_t keycode, keyrecord_t* record,
         case MT(MOD_LGUI, KC_A):
         case MT(MOD_LCTL, KC_D):
         case MT(MOD_RCTL, KC_C):
-        case MT(MOD_LSFT, KC_EQUAL):
 
         case MT(MOD_LGUI, KC_K):
         case MT(MOD_LALT, KC_L):
@@ -504,51 +464,21 @@ uint16_t get_flow_tap_term(uint16_t keycode, keyrecord_t* record,
         case MT(MOD_LCTL, KC_K):
         case MT(MOD_RGUI, KC_SCLN):
         case MT(MOD_RCTL, KC_COMMA):
-
             return FLOW_TAP_TERM;
     }
   }
 
-return 0;  // Disable Flow Tap otherwise.
+  return 0;  // Disable Flow Tap otherwise.
 }
 
-// uint16_t get_flow_tap_term(uint16_t keycode, keyrecord_t* record,
-//                            uint16_t prev_keycode) {
-//   // Only apply Flow Tap when following a letter key, and not hotkeys.
-//   if (get_tap_keycode(prev_keycode) <= KC_Z &&
-//       (get_mods() & (MOD_MASK_CG | MOD_BIT_LALT)) == 0) {
-//     switch (keycode) {
-//       case HRM_S:
-//       case HRM_X:
-//       case HRM_I:
-//       case HRM_QUO:
-//       case HRM_DOT:
-//         return FLOW_TAP_TERM;
-
-//       case HRM_G:
-//       case HRM_H:
-//         return FLOW_TAP_TERM - 25;
-//     }
-//   }
-//
-// return 0;  // Disable Flow Tap otherwise.
-// }
-
-//---------------------------
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (get_tap_keycode(keycode)) {
-        case KC_F:
-        case KC_J:
+    switch (keycode) {
+        case MT(MOD_LSFT, KC_F):
+        case MT(MOD_RSFT, KC_J):
+        case MT(MOD_LSFT, KC_EQUAL):
             return g_tapping_term - 45;
         default:
             return g_tapping_term;
     }
 }
-
-// Pour mac seulement?
-// bool get_speculative_hold(uint16_t keycode, keyrecord_t* record) {
-//   return true;  // Enable for all mods.
-// }
-
-// ------------------
