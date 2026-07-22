@@ -9,7 +9,7 @@
 #define RGB_MATRIX_TIMEOUT 120000
 
 #define USB_SUSPEND_WAKEUP_DELAY 0
-#define SERIAL_NUMBER "waJ3V/Oad5W3"
+#define SERIAL_NUMBER "waJ3V/dPqomx"
 #define LAYER_STATE_8BIT
 #define COMBO_COUNT 5
 
@@ -82,3 +82,6 @@
 #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 #define CAPS_WORD_INVERT_ON_SHIFT
 #define CAPS_WORD_IDLE_TIMEOUT 3500 // 5000 (5s) par défaut
+
+//#define ACTION_DEBUG
+//#define DEBUG_ENABLE

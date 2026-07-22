@@ -14,6 +14,4 @@
 #define CSA_RCBR ALGR(KC_8)
 #define CSA_LBRC ALGR(KC_9)
 #define CSA_RBRC ALGR(KC_0)
-#define CSA_APOS S(KC_COMM)
-#define CSA_DQOT S(KC_DOT)
 #define CSA_DTLD ALGR(KC_RBRC)
