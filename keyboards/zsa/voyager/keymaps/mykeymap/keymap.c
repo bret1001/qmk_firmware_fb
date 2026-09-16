@@ -403,6 +403,8 @@ uint16_t get_flow_tap_term(uint16_t keycode, keyrecord_t* record,
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+        case MT(MOD_LGUI, KC_A):
+            return g_tapping_term + 45;
         case MT(MOD_LSFT, KC_F):
         case MT(MOD_RSFT, KC_J):
         case MT(MOD_LSFT, KC_EQUAL):
