@@ -36,10 +36,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                     LT(4, KC_SPACE),LT(6, KC_TAB),                                  LT(6, KC_BSPC), LT(4, KC_ENTER)
   ),
   [2] = LAYOUT_voyager(
-    KC_ESCAPE,      KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_F5,                                          KC_F6,          KC_F7,          KC_F8,          KC_F9,          KC_F10,         KC_F11,
-    CW_TOGG,        KC_F5,          KC_F6,          KC_F7,          KC_F8,          KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_F12,
-    KC_CAPS,        KC_F9,          KC_F10,         KC_F11,         KC_F12,         KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_NO,
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_NO,          KC_TRANSPARENT,
+    KC_ESCAPE,      KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_F5,                                          KC_F6,          KC_F7,          KC_F8,          KC_F9,          KC_F10,         KC_F11,         
+    CW_TOGG,        KC_F5,          KC_F6,          KC_F7,          KC_F8,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_F12,         
+    KC_CAPS,        MT(MOD_LGUI, KC_F9),MT(MOD_LALT, KC_F10),MT(MOD_LCTL, KC_F11),MT(MOD_LSFT, KC_F12),KC_NO,                                          KC_NO,          KC_RIGHT_SHIFT, KC_LEFT_CTRL,   KC_LEFT_ALT,    KC_RIGHT_GUI,   KC_NO,          
+    KC_TRANSPARENT, KC_NO,          KC_RIGHT_ALT,   KC_RIGHT_CTRL,  KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_RIGHT_CTRL,  KC_RIGHT_ALT,   KC_NO,          KC_TRANSPARENT, 
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_DELETE,      KC_TRANSPARENT
   ),
   [3] = LAYOUT_voyager(
