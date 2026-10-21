@@ -90,8 +90,8 @@ const uint16_t PROGMEM combo4[] = { CSA_CCED, MT(MOD_LGUI, KC_A), COMBO_END};
 combo_t key_combos[COMBO_COUNT] = {
     COMBO(combo0, TG(1)),
     COMBO(combo1, KC_ESCAPE),
-    COMBO(combo2, KC_CAPS),
-    COMBO(combo3, CW_TOGG),
+    COMBO(combo2, CW_TOGG),
+    COMBO(combo3, KC_CAPS),
     COMBO(combo4, KC_CAPS),
 };
 
